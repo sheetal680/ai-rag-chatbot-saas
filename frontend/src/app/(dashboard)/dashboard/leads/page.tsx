@@ -10,7 +10,7 @@ export default function LeadsPage() {
         title="Leads"
         description="Contacts captured through the chatbot lead form."
       />
-      <div className="p-8">
+      <div className="p-4 sm:p-8">
         <LeadsTable />
       </div>
     </div>

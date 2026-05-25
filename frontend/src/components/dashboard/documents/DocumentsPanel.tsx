@@ -202,7 +202,7 @@ export default function DocumentsPanel() {
   const isIngesting = ingestStep !== "idle";
 
   return (
-    <div className="space-y-6 px-8 py-6">
+    <div className="space-y-6 px-4 py-4 sm:px-8 sm:py-6">
       {/* Upload card */}
       <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
         {/* Tabs */}

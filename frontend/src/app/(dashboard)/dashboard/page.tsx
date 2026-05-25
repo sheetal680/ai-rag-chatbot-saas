@@ -51,7 +51,7 @@ export default function DashboardOverviewPage() {
     <div>
       <PageHeader title="Overview" description="Your chatbot at a glance." />
 
-      <div className="space-y-6 p-8">
+      <div className="space-y-6 p-4 sm:p-8">
         {/* Stat cards */}
         {loading ? (
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">

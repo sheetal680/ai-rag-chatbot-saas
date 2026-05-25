@@ -75,7 +75,7 @@ export default function SettingsPage() {
     <div>
       <PageHeader title="Settings" description="Widget configuration and integration setup." />
 
-      <div className="space-y-6 p-8">
+      <div className="space-y-6 p-4 sm:p-8">
 
         {/* ── Embed Widget ─────────────────────────────────────────────── */}
         <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">

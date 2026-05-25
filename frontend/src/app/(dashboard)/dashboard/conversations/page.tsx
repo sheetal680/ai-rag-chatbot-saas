@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { getConversation, listConversations } from "@/lib/api";
 import { getClientId } from "@/lib/constants";
 import PageHeader from "@/components/dashboard/PageHeader";
@@ -33,6 +34,11 @@ export default function ConversationsPage() {
     }
   }
 
+  function handleBack() {
+    setSelected(null);
+    setDetail(null);
+  }
+
   return (
     <div className="flex h-full flex-col">
       <PageHeader
@@ -40,8 +46,14 @@ export default function ConversationsPage() {
         description={`${conversations.length} session${conversations.length !== 1 ? "s" : ""} recorded`}
       />
       <div className="flex flex-1 overflow-hidden">
-        {/* Left: session list */}
-        <div className="w-72 shrink-0 overflow-y-auto border-r border-zinc-800 scrollbar-hide">
+        {/* Left: session list — full width on mobile when no selection */}
+        <div
+          className={[
+            "shrink-0 overflow-y-auto border-r border-zinc-800 scrollbar-hide",
+            "w-full sm:w-72",
+            selected ? "hidden sm:block" : "block",
+          ].join(" ")}
+        >
           <ConversationsList
             conversations={conversations}
             selectedId={selected}
@@ -49,16 +61,28 @@ export default function ConversationsPage() {
           />
         </div>
 
-        {/* Right: message detail */}
-        <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Right: message detail — full width on mobile when selected */}
+        <div
+          className={[
+            "flex flex-1 flex-col overflow-hidden",
+            selected ? "flex" : "hidden sm:flex",
+          ].join(" ")}
+        >
           {selected === null ? (
             <div className="flex flex-1 items-center justify-center">
               <p className="text-sm text-zinc-600">Select a conversation to view messages</p>
             </div>
           ) : (
             <>
-              <div className="border-b border-zinc-800 px-6 py-3">
-                <p className="font-mono text-xs text-zinc-600">Session: {selected}</p>
+              <div className="flex items-center gap-3 border-b border-zinc-800 px-4 py-3 sm:px-6">
+                <button
+                  onClick={handleBack}
+                  className="sm:hidden rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 transition"
+                  aria-label="Back to conversations"
+                >
+                  <ArrowLeft size={16} />
+                </button>
+                <p className="font-mono text-xs text-zinc-600 truncate">Session: {selected}</p>
               </div>
               <ConversationDetail
                 sessionId={selected}

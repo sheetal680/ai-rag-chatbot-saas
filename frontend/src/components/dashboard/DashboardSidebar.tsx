@@ -24,7 +24,7 @@ const NAV = [
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
 
@@ -48,6 +48,7 @@ export default function DashboardSidebar() {
           <Link
             key={href}
             href={href}
+            onClick={onClose}
             className={cn(
               "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition",
               isActive(href, exact)

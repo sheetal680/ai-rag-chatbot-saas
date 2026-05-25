@@ -72,7 +72,7 @@ export default function AnalyticsPage() {
     <div>
       <PageHeader title="Analytics" description="Usage statistics for the last 14 days." />
 
-      <div className="space-y-6 p-8">
+      <div className="space-y-6 p-4 sm:p-8">
 
         {/* ── Stat cards ──────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
