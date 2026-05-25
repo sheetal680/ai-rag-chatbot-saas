@@ -12,6 +12,7 @@ router = APIRouter()
 
 @router.post("/", response_model=LeadResponse, status_code=201, summary="Capture a lead")
 async def capture_lead(lead: LeadCreate) -> LeadResponse:
+    """Public endpoint — used by the embedded chat widget. client_id comes from the widget config."""
     lead_id = new_id()
     now = datetime.now(UTC)
     pool = get_pool()
@@ -28,9 +29,9 @@ async def capture_lead(lead: LeadCreate) -> LeadResponse:
     return LeadResponse(id=lead_id, name=lead.name, email=lead.email, created_at=now)
 
 
-@router.get("/", summary="List leads for a client", dependencies=[Depends(get_current_user)])
+@router.get("/", summary="List leads for the current user")
 async def list_leads(
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
     skip: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
 ) -> list[dict]:
@@ -44,7 +45,7 @@ async def list_leads(
             ORDER BY created_at DESC
             LIMIT $2 OFFSET $3
             """,
-            client_id, limit, skip,
+            current_user["client_id"], limit, skip,
         )
     result = []
     for row in rows:
@@ -55,11 +56,11 @@ async def list_leads(
     return result
 
 
-@router.patch("/{lead_id}/status", summary="Update lead status", dependencies=[Depends(get_current_user)])
+@router.patch("/{lead_id}/status", summary="Update lead status")
 async def update_lead_status(
     lead_id: str,
     status: str,
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
 ) -> dict:
     allowed = {"new", "contacted", "qualified", "closed"}
     if status not in allowed:
@@ -68,7 +69,7 @@ async def update_lead_status(
     async with pool.acquire() as conn:
         result = await conn.execute(
             "UPDATE leads SET status = $1 WHERE id = $2 AND client_id = $3",
-            status, lead_id, client_id,
+            status, lead_id, current_user["client_id"],
         )
     if result == "UPDATE 0":
         raise HTTPException(status_code=404, detail="Lead not found")

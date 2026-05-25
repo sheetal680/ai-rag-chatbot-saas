@@ -10,29 +10,29 @@ from app.services.analytics_service import (
     list_conversations,
 )
 
-router = APIRouter(dependencies=[Depends(get_current_user)])
+router = APIRouter()
 
 
-@router.get("/summary", summary="Overview stats for a client")
-async def summary(client_id: str = Query(...)) -> dict:
-    return await get_summary(client_id)
+@router.get("/summary", summary="Overview stats for the current user")
+async def summary(current_user: dict = Depends(get_current_user)) -> dict:
+    return await get_summary(current_user["client_id"])
 
 
 @router.get("/conversations", summary="List chat sessions newest-first")
 async def conversations(
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
     skip: int = Query(0, ge=0),
     limit: int = Query(30, ge=1, le=100),
 ) -> list[dict]:
-    return await list_conversations(client_id, skip=skip, limit=limit)
+    return await list_conversations(current_user["client_id"], skip=skip, limit=limit)
 
 
 @router.get("/conversations/{session_id}", summary="All messages for one session")
 async def conversation_detail(
     session_id: str,
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
 ) -> dict:
-    result = await get_conversation(client_id, session_id)
+    result = await get_conversation(current_user["client_id"], session_id)
     if not result["messages"]:
         raise HTTPException(status_code=404, detail="Session not found")
     return result
@@ -40,23 +40,23 @@ async def conversation_detail(
 
 @router.get("/volume", summary="Daily message + session counts (last N days)")
 async def volume(
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
     days: int = Query(30, ge=1, le=90),
 ) -> list[dict]:
-    return await get_volume(client_id, days=days)
+    return await get_volume(current_user["client_id"], days=days)
 
 
 @router.get("/top-questions", summary="Most frequently asked user questions")
 async def top_questions(
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
     limit: int = Query(10, ge=1, le=50),
 ) -> list[dict]:
-    return await get_top_questions(client_id, limit=limit)
+    return await get_top_questions(current_user["client_id"], limit=limit)
 
 
 @router.get("/unanswered", summary="User questions that triggered the no-context fallback")
 async def unanswered(
-    client_id: str = Query(...),
+    current_user: dict = Depends(get_current_user),
     limit: int = Query(10, ge=1, le=50),
 ) -> list[dict]:
-    return await get_unanswered(client_id, limit=limit)
+    return await get_unanswered(current_user["client_id"], limit=limit)

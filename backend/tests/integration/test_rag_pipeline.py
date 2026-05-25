@@ -237,12 +237,15 @@ async def test_upload_document_api_stores_chunks(chroma_client, real_embedder):
 
             txt_content = SAMPLE_TEXT.encode("utf-8")
             with TestClient(app, raise_server_exceptions=True) as client:
-                # Bypass auth for the test
-                with patch("app.core.security.get_current_user", return_value={"sub": "test"}):
+                # Bypass auth for the test — must include client_id so the route
+                # can namespace the ChromaDB collection correctly.
+                with patch(
+                    "app.core.security.get_current_user",
+                    return_value={"sub": "test", "client_id": "api_test_tenant"},
+                ):
                     resp = client.post(
                         "/api/v1/documents/upload",
                         files={"file": ("policy.txt", txt_content, "text/plain")},
-                        data={"client_id": "api_test_tenant"},
                     )
 
             assert resp.status_code == 200
