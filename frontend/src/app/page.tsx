@@ -152,12 +152,6 @@ export default function LandingPage() {
             >
               Get started free
             </Link>
-            <Link
-              href="/chat/new"
-              className="rounded-xl border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-zinc-100"
-            >
-              See the demo
-            </Link>
           </div>
         </div>
       </section>
@@ -176,7 +170,6 @@ export default function LandingPage() {
           </p>
           <div className="flex gap-4 text-xs text-zinc-600">
             <Link href="/login" className="hover:text-zinc-400">Dashboard</Link>
-            <Link href="/chat/new" className="hover:text-zinc-400">Demo</Link>
             <Link href="/dashboard/settings" className="hover:text-zinc-400">Settings</Link>
           </div>
         </div>
