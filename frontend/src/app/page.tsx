@@ -36,65 +36,6 @@ const CHECKS = [
   "Scales from 1 client to 1,000",
 ];
 
-// ─── Mock chat preview ────────────────────────────────────────────────────────
-
-function ChatPreview() {
-  const messages = [
-    { role: "bot",  text: "Hi! I'm the AI assistant for Luminary Homes. How can I help you today?" },
-    { role: "user", text: "Do you have any 2-bed apartments available near the city centre?" },
-    { role: "bot",  text: "Yes! We currently have 3 two-bedroom apartments within a mile of the city centre, starting from £1,200/month. Would you like to book a viewing?" },
-  ];
-
-  return (
-    <div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-zinc-700/60 bg-zinc-900 shadow-2xl shadow-black/60">
-      {/* Header */}
-      <div className="flex items-center gap-3 border-b border-zinc-800 bg-zinc-900 px-4 py-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white">L</div>
-        <div>
-          <p className="text-xs font-semibold text-zinc-100">Luminary Homes</p>
-          <p className="flex items-center gap-1 text-[10px] text-zinc-400">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Online
-          </p>
-        </div>
-      </div>
-      {/* Messages */}
-      <div className="space-y-3 p-4">
-        {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-            <div
-              className={`max-w-[80%] rounded-2xl px-3 py-2 text-xs leading-relaxed ${
-                m.role === "user"
-                  ? "rounded-br-sm bg-emerald-600 text-white"
-                  : "rounded-bl-sm bg-zinc-800 text-zinc-100"
-              }`}
-            >
-              {m.text}
-            </div>
-          </div>
-        ))}
-        {/* Typing indicator */}
-        <div className="flex items-end gap-1 pl-1">
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="h-1.5 w-1.5 rounded-full bg-zinc-500 animate-dot-bounce"
-              style={{ animationDelay: `${i * 0.16}s` }}
-            />
-          ))}
-        </div>
-      </div>
-      {/* Input */}
-      <div className="border-t border-zinc-800 bg-zinc-950 px-4 py-3">
-        <div className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2">
-          <span className="flex-1 text-xs text-zinc-600">Type a message…</span>
-          <div className="h-5 w-5 rounded bg-emerald-600" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
@@ -111,9 +52,6 @@ export default function LandingPage() {
             <span className="text-sm font-semibold text-zinc-100">RAGBot</span>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/chat/new" className="hidden text-sm text-zinc-400 transition hover:text-zinc-100 sm:block">
-              Live demo
-            </Link>
             <Link
               href="/login"
               className="rounded-lg bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:bg-zinc-700"
@@ -145,23 +83,11 @@ export default function LandingPage() {
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
-            href="/chat/new"
-            className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
-          >
-            Try the live demo →
-          </Link>
-          <Link
             href="/login"
-            className="rounded-xl border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-zinc-100"
+            className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
           >
             Admin dashboard
           </Link>
-        </div>
-
-        {/* Chat preview */}
-        <div className="mx-auto mt-20 max-w-sm">
-          <div className="mb-3 text-xs text-zinc-600">↓ Live preview — example client chatbot</div>
-          <ChatPreview />
         </div>
       </section>
 
