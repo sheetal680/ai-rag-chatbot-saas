@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { listLeads, updateLeadStatus } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 import type { LeadRecord, LeadStatus } from "@/types";
 import { cn } from "@/utils/cn";
 
@@ -21,7 +21,7 @@ export default function LeadsTable() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
   useEffect(() => {
-    listLeads(CLIENT_ID)
+    listLeads(getClientId())
       .then(setLeads)
       .finally(() => setLoading(false));
   }, []);
@@ -29,7 +29,7 @@ export default function LeadsTable() {
   async function handleStatusChange(id: string, status: LeadStatus) {
     setUpdatingId(id);
     try {
-      await updateLeadStatus(id, status, CLIENT_ID);
+      await updateLeadStatus(id, status, getClientId());
       setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status } : l)));
     } catch {
       // ignore — status reverts visually

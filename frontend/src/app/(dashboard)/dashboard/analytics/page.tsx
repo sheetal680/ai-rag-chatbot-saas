@@ -8,7 +8,7 @@ import {
   getUnanswered,
   getVolume,
 } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 import PageHeader from "@/components/dashboard/PageHeader";
 import StatCard from "@/components/dashboard/StatCard";
 import type { AnalyticsSummary, TopQuestion, UnansweredQuery, VolumePoint } from "@/types";
@@ -60,10 +60,10 @@ export default function AnalyticsPage() {
   const [unanswered, setUnanswered] = useState<UnansweredQuery[]>([]);
 
   useEffect(() => {
-    getAnalyticsSummary(CLIENT_ID).then(setStats).catch(() => null);
-    getVolume(CLIENT_ID, 14).then(setVolume).catch(() => null);
-    getTopQuestions(CLIENT_ID).then(setTopQ).catch(() => null);
-    getUnanswered(CLIENT_ID).then(setUnanswered).catch(() => null);
+    getAnalyticsSummary(getClientId()).then(setStats).catch(() => null);
+    getVolume(getClientId(), 14).then(setVolume).catch(() => null);
+    getTopQuestions(getClientId()).then(setTopQ).catch(() => null);
+    getUnanswered(getClientId()).then(setUnanswered).catch(() => null);
   }, []);
 
   const maxMessages = Math.max(...volume.map((v) => v.messages), 1);

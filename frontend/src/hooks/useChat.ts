@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useChatStore } from "@/store/chatStore";
 import { streamChat } from "@/lib/api";
+import { getClientId } from "@/lib/constants";
 import type { Message } from "@/types";
 import { randomId } from "@/utils/format";
 
@@ -62,7 +63,7 @@ export function useChat(sessionId: string) {
       });
 
       try {
-        for await (const event of streamChat(text, sessionId, history)) {
+        for await (const event of streamChat(text, sessionId, getClientId(), history)) {
           if (event.token !== undefined) {
             appendToken(assistantId, event.token);
           }

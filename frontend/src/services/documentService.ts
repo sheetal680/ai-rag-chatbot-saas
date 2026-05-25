@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 
 export interface Document {
   doc_id: string;
@@ -11,7 +11,7 @@ export interface Document {
 export async function uploadDocument(file: File): Promise<{ doc_id: string; chunk_count: number }> {
   const form = new FormData();
   form.append("file", file);
-  form.append("client_id", CLIENT_ID);
+  form.append("client_id", getClientId());
   const { data } = await api.post("/documents/upload-pdf", form, {
     headers: { "Content-Type": "multipart/form-data" },
   });
@@ -19,7 +19,7 @@ export async function uploadDocument(file: File): Promise<{ doc_id: string; chun
 }
 
 export async function listDocuments(): Promise<Document[]> {
-  const { data } = await api.get<Document[]>(`/documents/?client_id=${CLIENT_ID}`);
+  const { data } = await api.get<Document[]>(`/documents/?client_id=${getClientId()}`);
   return data;
 }
 

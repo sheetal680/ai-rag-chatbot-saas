@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { uploadPdf } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 
 interface UploadResult {
   doc_id: string;
@@ -31,7 +31,7 @@ export default function DocumentUpload() {
     setLoading(true);
     setError("");
     try {
-      const data = await uploadPdf(file, CLIENT_ID);
+      const data = await uploadPdf(file, getClientId());
       setResult(data);
       setFile(null);
     } catch {

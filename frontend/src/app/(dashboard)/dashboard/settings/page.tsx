@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import PageHeader from "@/components/dashboard/PageHeader";
-import { CLIENT_ID, API_BASE } from "@/lib/constants";
+import { API_BASE } from "@/lib/constants";
+import { useAuthStore } from "@/store/authStore";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -48,6 +49,9 @@ function InlineUrl({ url }: { url: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function SettingsPage() {
+  const { user } = useAuthStore();
+  const clientId = user?.client_id ?? "";
+
   const [companyName, setCompanyName]   = useState("My Company");
   const [primaryColor, setPrimaryColor] = useState("#2563eb");
   const [greeting, setGreeting]         = useState("Hi! How can I help you today?");
@@ -58,7 +62,7 @@ export default function SettingsPage() {
   const embedCode = `<!-- Paste before </body> on your website -->
 <script>
   window.ChatbotConfig = {
-    clientId:     "${CLIENT_ID}",
+    clientId:     "${clientId}",
     widgetUrl:    "${widgetUrl}",
     companyName:  "${companyName}",
     primaryColor: "${primaryColor}",
@@ -169,7 +173,7 @@ export default function SettingsPage() {
           <h2 className="mb-4 text-sm font-medium text-zinc-300">Environment</h2>
           <dl className="space-y-3">
             {[
-              { label: "Client ID",  value: CLIENT_ID },
+              { label: "Client ID",  value: clientId },
               { label: "API Base",   value: API_BASE },
               { label: "Widget URL", value: widgetUrl },
             ].map(({ label, value }) => (

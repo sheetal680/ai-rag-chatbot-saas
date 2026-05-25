@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BarChart2, FileText, MessageSquare, Users, ArrowRight } from "lucide-react";
 import { getAnalyticsSummary } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 import PageHeader from "@/components/dashboard/PageHeader";
 import StatCard from "@/components/dashboard/StatCard";
 import Skeleton from "@/components/ui/Skeleton";
@@ -34,7 +34,7 @@ export default function DashboardOverviewPage() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getAnalyticsSummary(CLIENT_ID)
+    getAnalyticsSummary(getClientId())
       .then(setStats)
       .catch(() => setError(true))
       .finally(() => setLoading(false));

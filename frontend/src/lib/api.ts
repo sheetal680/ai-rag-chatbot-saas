@@ -71,6 +71,7 @@ export interface ChatStreamEvent {
 export async function* streamChat(
   question: string,
   sessionId: string,
+  clientId: string,
   history: ChatMessage[]
 ): AsyncGenerator<ChatStreamEvent> {
   const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -80,7 +81,7 @@ export async function* streamChat(
     body: JSON.stringify({
       question,
       session_id: sessionId,
-      client_id: process.env.NEXT_PUBLIC_CLIENT_ID ?? "default",
+      client_id: clientId,
       history,
     }),
   });

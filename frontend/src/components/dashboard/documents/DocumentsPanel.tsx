@@ -11,7 +11,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { deleteDocument, ingestUrl, listDocuments, uploadDocument } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 import DataTable, { type Column } from "@/components/dashboard/DataTable";
 import type { Document } from "@/types";
 import { cn } from "@/utils/cn";
@@ -64,7 +64,7 @@ export default function DocumentsPanel() {
 
   async function fetchDocs() {
     try {
-      const data = await listDocuments(CLIENT_ID);
+      const data = await listDocuments(getClientId());
       setDocs(data);
     } catch {
       // ignore — table stays empty
@@ -88,7 +88,7 @@ export default function DocumentsPanel() {
     uploadTimers.current.push(setTimeout(() => setUploadStep("indexing"), 2800));
 
     try {
-      const res = await uploadDocument(file, CLIENT_ID);
+      const res = await uploadDocument(file, getClientId());
       clearTimers(uploadTimers.current);
       setUploadStep("done");
       setUploadChunks(res.chunk_count);
@@ -114,7 +114,7 @@ export default function DocumentsPanel() {
     ingestTimers.current.push(setTimeout(() => setIngestStep("indexing"), 2800));
 
     try {
-      const res = await ingestUrl(url.trim(), CLIENT_ID);
+      const res = await ingestUrl(url.trim(), getClientId());
       clearTimers(ingestTimers.current);
       setIngestStep("done");
       setIngestChunks(res.chunk_count);
@@ -133,7 +133,7 @@ export default function DocumentsPanel() {
   async function handleDelete(docId: string) {
     setDeletingId(docId);
     try {
-      await deleteDocument(docId, CLIENT_ID);
+      await deleteDocument(docId, getClientId());
       setDocs((prev) => prev.filter((d) => d.doc_id !== docId));
       toast.success("Document removed from knowledge base.");
     } catch {

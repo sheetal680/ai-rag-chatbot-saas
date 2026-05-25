@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getConversation, listConversations } from "@/lib/api";
-import { CLIENT_ID } from "@/lib/constants";
+import { getClientId } from "@/lib/constants";
 import PageHeader from "@/components/dashboard/PageHeader";
 import ConversationsList from "@/components/dashboard/conversations/ConversationsList";
 import ConversationDetail from "@/components/dashboard/conversations/ConversationDetail";
@@ -15,7 +15,7 @@ export default function ConversationsPage() {
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
-    listConversations(CLIENT_ID).then(setConversations).catch(() => null);
+    listConversations(getClientId()).then(setConversations).catch(() => null);
   }, []);
 
   async function handleSelect(sessionId: string) {
@@ -24,7 +24,7 @@ export default function ConversationsPage() {
     setLoadingDetail(true);
     setDetail(null);
     try {
-      const data = await getConversation(sessionId, CLIENT_ID);
+      const data = await getConversation(sessionId, getClientId());
       setDetail(data);
     } catch {
       setDetail({ session_id: sessionId, messages: [] });
