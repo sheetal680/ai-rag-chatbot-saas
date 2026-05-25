@@ -46,6 +46,10 @@ backend/uploads/
 .DS_Store
 Thumbs.db
 
+# ── HuggingFace Space working clones (never commit alongside main repo) ───────
+hf-space/
+hf-space-clone/
+
 # ── IDE ──────────────────────────────────────────────────────────────────────
 .vscode/
 .idea/
