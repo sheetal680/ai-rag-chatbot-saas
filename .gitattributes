@@ -1,0 +1,14 @@
+# Normalize line endings to LF in the repo; Git handles checkout conversion per-OS
+* text=auto eol=lf
+
+# Force binary files to never be converted
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary

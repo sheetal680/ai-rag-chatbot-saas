@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 9 9 11;       /* zinc-950 */
+    --foreground: 244 244 245;   /* zinc-100 */
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-zinc-950 text-zinc-100 antialiased;
+  }
+
+  /* Thin dark scrollbar for non-hidden scrollable areas */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-600;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Prose-style markdown for chat assistant messages */
+  .chat-prose p {
+    @apply mb-2 last:mb-0 leading-relaxed;
+  }
+  .chat-prose ul {
+    @apply mb-2 list-disc pl-4 space-y-0.5;
+  }
+  .chat-prose ol {
+    @apply mb-2 list-decimal pl-4 space-y-0.5;
+  }
+  .chat-prose li {
+    @apply leading-relaxed;
+  }
+  .chat-prose strong {
+    @apply font-semibold text-white;
+  }
+  .chat-prose em {
+    @apply italic;
+  }
+  .chat-prose a {
+    @apply text-blue-400 underline underline-offset-2 hover:text-blue-300;
+  }
+  .chat-prose code {
+    @apply bg-zinc-700/60 text-blue-300 px-1.5 py-0.5 rounded text-[0.8em] font-mono;
+  }
+  .chat-prose pre {
+    @apply bg-zinc-900 border border-zinc-700 rounded-lg p-3 my-2 overflow-x-auto;
+  }
+  .chat-prose pre code {
+    @apply bg-transparent text-zinc-300 p-0 text-[0.82em];
+  }
+  .chat-prose h1, .chat-prose h2, .chat-prose h3 {
+    @apply font-semibold text-white mt-3 mb-1 first:mt-0;
+  }
+  .chat-prose blockquote {
+    @apply border-l-2 border-zinc-600 pl-3 text-zinc-400 my-2;
+  }
+  .chat-prose hr {
+    @apply border-zinc-700 my-3;
+  }
+}

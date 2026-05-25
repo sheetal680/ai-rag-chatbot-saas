@@ -1,0 +1,6 @@
+Based on the following context, answer the user's question. Cite which part of the context supports your answer.
+
+Context:
+{context}
+
+Question: {question}
