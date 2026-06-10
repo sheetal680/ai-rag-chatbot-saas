@@ -3,8 +3,9 @@ import type { NextConfig } from "next";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 const SECURITY_HEADERS = [
-  // Prevents clickjacking
-  { key: "X-Frame-Options", value: "DENY" },
+  // Allow embedding in any iframe
+  { key: "X-Frame-Options", value: "ALLOWALL" },
+  { key: "Content-Security-Policy", value: "frame-ancestors *" },
   // Stops MIME-type sniffing
   { key: "X-Content-Type-Options", value: "nosniff" },
   // Controls how much referrer info is sent
